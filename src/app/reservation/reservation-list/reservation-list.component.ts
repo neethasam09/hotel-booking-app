@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationService } from '../reservation.service';
 import { Reservation } from 'src/app/models/reservation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation-list',
@@ -9,7 +10,7 @@ import { Reservation } from 'src/app/models/reservation';
 })
 export class ReservationListComponent implements OnInit {
 
-  constructor(private reservationService: ReservationService) {}
+  constructor(private reservationService: ReservationService, private router: Router) {}
   reservations: Reservation[] = [];
 
   ngOnInit(): void {
@@ -17,7 +18,11 @@ export class ReservationListComponent implements OnInit {
     this.reservations = storedReservations ? JSON.parse(storedReservations) : [];
   }
   editReservation(r:Reservation){
-    this.reservationService.updateReservation(r);
+    console.log("edit clicked")
+    console.log(r)
+    // navigate expects an array of path segments; do not use bracket indexing
+    this.router.navigate(['/edit', r.id]);
+    console.log("navigated to edit")
   }
   deleteReservation(id:string){
     this.reservationService.deleteReservation(id);

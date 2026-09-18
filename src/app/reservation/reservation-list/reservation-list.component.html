@@ -1,11 +1,32 @@
+<app-home></app-home>
 <h2>Reservation List</h2>
-<ul *ngIf="reservations.length; else noReservation">
-  <li *ngFor="let r of reservations">{{ r.guestName }} {{ r.checkInDate }} {{ r.roomNumber }} 
-    <button (click)="editReservation(r)">Edit</button>
-    <button (click)="deleteReservation(r.id)">Delete</button>
-  </li>
-</ul>
+<div *ngIf="reservations.length; else noReservation">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Check-In Date</th>
+        <th scope="col">Check-Out Date</th>
+        <th scope="col">Room Number</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let r of reservations">
+      <tr>
+        <td>{{ r.guestName }}</td>
+        <td>{{ r.checkInDate }}</td>
+        <td>{{ r.checkOutDate }}</td>
+        <td>{{ r.roomNumber }}</td>
+        <td>
+          <button class="btn btn-sm btn-secondary me-2" style="width: 65px;" (click)="editReservation(r)">Edit</button>
+          <button class="btn btn-sm btn-danger" style="width: 65px;" (click)="deleteReservation(r.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 <ng-template #noReservation>
-    <p>No reservations available.</p>
+  <p>No reservations available.</p>
 </ng-template>
