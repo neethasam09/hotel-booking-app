@@ -10,21 +10,20 @@ import { Router } from '@angular/router';
 })
 export class ReservationListComponent implements OnInit {
 
-  constructor(private reservationService: ReservationService, private router: Router) {}
+  constructor(private reservationService: ReservationService, private router: Router) { }
   reservations: Reservation[] = [];
 
   ngOnInit(): void {
-    const storedReservations = localStorage.getItem('reservations');
-    this.reservations = storedReservations ? JSON.parse(storedReservations) : [];
+    this.reservationService.getReservations().subscribe(res => this.reservations = res);
   }
-  editReservation(r:Reservation){
+  editReservation(r: Reservation) {
     console.log("edit clicked")
     console.log(r)
     // navigate expects an array of path segments; do not use bracket indexing
     this.router.navigate(['/edit', r.id]);
     console.log("navigated to edit")
   }
-  deleteReservation(id:string){
+  deleteReservation(id: string) {
     this.reservationService.deleteReservation(id);
     this.ngOnInit()
   }
